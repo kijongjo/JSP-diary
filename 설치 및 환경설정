@@ -1,0 +1,82 @@
+아파치와 톰캣?
+
+웹페이지는 아파치와 톰캣으로 이루어져있다. 
+
+1)아파치?
+웹서버로 불리며 클라이언트 요청이 들어왔을때 정적 웹페이지를 담당한다. 
+80번 포트로 클라이언트를 요청이 왔을때만 응답한다. 
+(post,get,delete)
+정적인 데이터만 처리한다는 것은 HTML,CSS,이미지등이 포함된다.
+
+2)톰캣?
+동적인 웹을 만들기 위한 웹컨테이너로 SERVLET 컨테이너라고도 불린다.  웹서버에서 정적으로 처리해야하는 
+데이터를 제외한 JSP,ASP,PHP등은 톰캣에게 전달한다. 
+
+WAS?
+Web Application Server라고도 불린다
+컨테이너,웹컨테이너,서블릿 컨테이너라고도 불리운다. 
+JSP,서블릿처리,HTTP요청 수신 및 응답을하며 아파치만 쓰면 정적인 웹페이지만 처리하므로 처리속도가 빠르다.하지만 
+동적인 페이지는 처리할 수 없는데 톰캣(WAS)를 쓰면 동적인 데이터 처리가 가능하다. DB연결,데이터 조작,다른 응용
+프로그램과 상호 작용이 가능하다. 톰캣은 8080포트로 처리한다. 
+
+아파치 톰캣?
+톰캣이 아파치의 기능 일부를 가져와서 제공해주는 형태이기 때문에 같이 합쳐서 부른다. 
+-----------------------------------------------------------------------------------------
+톰캣 설치 
+1.apache 사이트에 들어가 tomcat9을 다운로드 (국내 서버 co.kr로 다운 받는것이 빠르다. 윈도우용으로 받기)
+2.설치시 window10경우 c드라이브를 제외한 다른 드라이브에 설치해야한다.
+
+환경설정
+1.미리 JDK의 PATH와 CLASSPATH 설정
+2.톰캣 PATH설정인 CATALINA_HOME 설정한다. (웹서버 사용을 위함)
+환경변수 ->시스템변수 ->새로만들기->이름:CATALINA_HOME 경로:E드라이브 TOMCAT설치 폴더(E:\tomcat9\tomcat9)
+3.cmd에서 E:\tomcat9\tomcat9\bin로 경로변경 ->startup.bat 명령 입력 
+4.새로 뜨는 java로그 모양의 cmd 창을 켜놓으면 서버가 가동된다. 
+
+*한글 사용가능한 서버로 변경하기 
+먼저 톰캣9 폴더 구성요로는 
+conf 톰캣 환경 설정에 관해 저장해 두는 폴더
+logs 누가 언제 접속했는지에 관해 기록해두는 폴더
+webapps 웹 어플리케이션 파일이 저장되는 폴더 가 있는데 
+
+톰캣9폴더->conf->server파일 오른쪽키 클릭->편집 ->ctrl+f 8080두번 ->선택된 소스에 URLEncoding="UTF-8"입력
+EX)
+<Connector port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" URIEncoding="UTF-8" />
+
+E:\tomcat9\tomcat9\webapps\ROOT를 따라 들어가서 index 브라켓 모양 클릭 
+36번줄에 <h1> 이름 이니셜:my tomcat <h1>로 해서 
+내서버를 명시한다.
+그러면 
+localhost:8080를 통해 열린 사이트에 들어가면 아이디가 적혀있다.
+
+*프로그램을 서버에 올리기 
+webapps ->root에 게임 관련된 파일과 폴더 전부 넣는다.  index 브라켓을 들어가 36~38번째 줄에
+링크를 건다 .
+ <a href="./day9/pika.html">ex)
+
+--------------------------------------------------------------------------------------------------------------------
+*이클립스로 서버 돌리기 
+1)웹관련된 환경으로 설정하기위해 swtich workspace other에서 workspace를 다시만들어준다 
+ex)web_workspace
+2)사이트내 한국어 사용환경을 만들어 주기 위해 
+window ->preference ->enc에서 나오는 모든 요소들에 대해서 utf-8로 전부 변경해준다.
+3)저장후에 create a project 클릭->  dynamic web project로 만든다. (dynamic web project는 
+즉석에서 제작해 배포한다.)->dynamic web project 선택한 후 target runtime ->apache tomcat v9.0버전을
+선택한다. ->create local 선택후 next 선택 ->finish
+4)finish를 누르면 web폴더가 만들어지는데 web폴더 우측마우스 클릭 html file을 선택하면 bracket 사용할 때와 
+같은 소스코드를 사용할 수 있다. 
+
+*bracket과 같은 코드 입력 환경을 만들기위해 EMMET을 설치한다.
+1)https://github.com/emmetio/emmet-eclipse#readme에서
+installation 주소복사
+http://download.emmet.io/eclipse/updates/ 
+help 
+
+2)install new software에 add해서 이름 emmet 주소 적용 emmet 체크박스 하고 넥스트 누르면 다운받을 파일 받아온다.
+
+
+3)
+window ->preference ->emmet에서 확장자 jsp 적어준다. 
+
