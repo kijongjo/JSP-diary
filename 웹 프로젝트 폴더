@@ -1,0 +1,31 @@
+src
+java 소스 파일을 저장해 놓는 폴더. build path 부분에 해당. 
+서블릿 클래스나 필터, 리스너 등 향후에 개발하는 모든 java 파일을 두는 곳. 
+
+build/classes 
+컴파일 된 자바 클래스 파일이 저장되는 폴더. 
+
+WebContent 
+Web Module 정보 입력시 content directiory로 설정한 값이 해당됨.
+HTML,CSS,JavaScript,JSP,이미지 등 웹 콘텐츠를 두는 폴더로 서버에 올릴 때 
+이 폴더 그대로 복사됨.
+
+WebContent/Web-inf 
+웹 어플리캐이션의 설정과 관련된 파일이 모여있다. 
+
+WebContent/WEB-INF/web.xml 
+웹 어플리케이션의 배치 설명서 파일 서블릿,필터,리스너,매개변수,기본 페이지 등
+정보를 저장
+서블릿 컨테이너는 클라이언트 요청시 이 파일을 참고해 작업을 수행한다.
+
+WebContent/WEB-INF/lib 
+자바 jar(아카이브 파일)을 저장 .
+jar는 특정한 기능을 구현한 class 파일과 properties 파일을 모안둔 파일. 
+java 에서는 구현내용을 import 하기위해 jar 파일을 추가함. 
+
+
+
+
+
+
+
