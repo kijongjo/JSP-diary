@@ -1,0 +1,9 @@
+java의 구조를 그대로 사용할 수 있는데 
+만약 코드가 중복된다면 method를 따로 만들어 중복되는 코드를 method로 사용해 길이를 줄일 수가 있다. 
+
+
+
+ex)
+
+  private void method 이름 (HttpServletRequest req, HttpServletResponse resp ) throws IOException {프로그램 내용}
+
