@@ -111,6 +111,21 @@ public class GuGuDan extends HttpServlet {
 }
 
 
+*서블렛을 사용하는 두번째 방법 
+@webservlet 말고 .web.xml에 servlet 추가 하는 것을 통해 servlet을 사용할 수도 있다. 
+보통은 webservlet을 사용하지만 프로젝트를 진행하다보면 두번째 방법을 사용하기도 한다. 
+사용방법 
+1.xml파일 소스의 diplay 다음에 아래의 소스를 입력한다. class 명과 주소명을 입력한다.
+	<servlet>
+		<servlet-name>monday</servlet-name>
+		<servlet-class>day2.monday</servlet-class>
+        </servlet>
+        <servlet-mapping>
+	        <servlet-name>monday</servlet-name>
+	        <url-pattern>/monday.do</url-pattern>
+	</servlet-mapping> 
+	
+	
 
 
 
