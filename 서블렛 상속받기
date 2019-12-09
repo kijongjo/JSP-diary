@@ -1,6 +1,6 @@
 src 폴더에서 HTML 파일을 새로 만든 후에 
 1)httpservlet을 class 상속 
-2)doGet() method override 
+2)doGet() 또는 doPost() method override 
 3)내가 만든 프로그램 등록 
 4)@WebServlet("/주소")사용
 
@@ -17,6 +17,8 @@ public class HelloServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 resp.setCharacterEncoding("UTF-8");  <- 한글 사용을 위함. 
+ - 텍스트형식이며 UTF-8이다.-라는 것을 명시해준다.
+  resp.setContentType("text/html;charset=UTF-8");
 
 
 PrintWriter out = resp.getWriter(); 
