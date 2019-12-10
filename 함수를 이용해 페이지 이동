@@ -1,0 +1,57 @@
+javascript 처럼 주소를 설정해 이동할 수가 있다. 
+document.frm.action="주소";  <-정보를 전달할 페이지 설정
+document.frm.method="get";   <-method는 get방식 으로 설정 post도 가능하다 .
+documnet.frm.submit();      <-이동하라는 내장 method 
+
+
+ex)
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+var dan;
+    $(function (){
+    	$("#dan").on("change",movePage);     <-option tag는 onchange를 사용하며 movepage를 하게 되면 function이 작동하게 된다. 
+
+    });
+    	
+    	function movePage(dan){
+    	console.log("movePage() 호출중..")
+    	/* printGuGuDan.jsp로 이동 */
+    	document.frm.action ="printGuGuDan.jsp";//전달할 페이지 url
+    	document.frm.method="get";//method는 get방식
+    	document.frm.submit();//이동
+    	
+    	}
+    		
+
+</script>
+</head>
+<body>
+	<!-- 옵션을 선택하면 movePage() 자바스크립트 함수를 호출   -->
+	<h1>출력할 구구단?</h1>
+	<form action="" name="frm">
+
+		<select name="d1" id="dan">
+			<option value="-------">선택</option>
+			<option value="1">1단</option>
+			<option value="2">2단</option>
+			<option value="3">3단</option>
+			<option value="4">4단</option>
+			<option value="5">5단</option>
+			<option value="6">6단</option>
+			<option value="7">7단</option>
+			<option value="8">8단</option>
+			<option value="9">9단</option>
+
+		</select>
+
+	</form>
+</body>
+</html>
