@@ -1,0 +1,45 @@
+JSP 안에내장된 객체가 존재한다. 
+_jspService() 안에 삽입되어서 실행된다. 
+
+객체의 종류 
+request: 요청객체 
+response:응답객체 
+
+
+request 객체의 method 종류 
+request.setCharacterEncoding("utf-8");  <-한글 사용 가능하도록 한다. 
+request.getMethod();                   <-어떤 방식으로 보내는지 알수 있다.
+request.getParameter("이름");           <-이름값을 가지고온다.
+request.getRemoteAddr();               <-접속자의 ip를 알 수가 있다.
+request.getQueryString();              <-querystring을 알 수가 있다.
+
+
+response 객체의 method 종류
+-response.getStatus();                  <-통신 상태를 알 수 있다.
+-응답 방식 
+1) forward 방식
+RequestDispatcher rd = request.getRequestDispatcher("주소");
+rd.forward(request, response);
+실행하면 알아서 입력된 주소값으로 가게된다.
+2) redirect 방식 
+response.sendRedirect("주소값");
+
+*두 응답 방식의 차이
+1.FOWARD
+→→→   -직진-
+
+2.REDIRECT 
+→      -주고 받은후 다시 감-
+  ←
+→→→
+*통신상태에 따른 주어지는 결과값
+ 200: 정상상태이며 통신이 가능한 상태
+ 404:not found 
+ 405:doGet,doPost 없음
+ 500:server side logic error
+
+
+
+
+
+
