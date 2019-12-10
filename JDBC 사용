@@ -1,0 +1,79 @@
+JSP에서 JDBC를 사용하기 위해  Java Resources ->Libraries->JRE System Library에 jdbc.jar 관련 파일이 
+추가되도록 해준다. 
+또는 WEB-INF->lib 폴더에 jdbc.jar관련 파일을 넣어주어 web app library목록에 jdbc.jar 관련 파일이 추가되도록 해준다. 
+
+사용법은 jdbc를 사용하는 방법 토대에 jsp 사용법을 합치면 된다. 
+ex)
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<%
+		//1.파라미터값 가져오기, id,pw 
+		String id1 = request.getParameter("id");
+		String pw1 = request.getParameter("pw");
+		//2. 화면에 출력 
+		//3. 8단계
+		//4.
+  	%>
+	<h4> id: <%=id1 %>  </h4>
+	<h4> pw: <%=pw1%></h4>
+	
+	
+	<%//1 변수 미리 설정
+	String id = request.getParameter("id");
+	String pw = request.getParameter("pw");
+	String ENAME = null;
+	String PWD = null;
+	String ID = null;
+	String driver = "oracle.jdbc.driver.OracleDriver";
+	String url = "jdbc:oracle:thin:@아이피:1521:orcl";
+	String user = "scott";
+	String password = "tiger";
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	StringBuffer sb = new StringBuffer();
+	ResultSet rs = null;
+	//2 드라이버 
+	Class.forName(driver);
+	//3 connection 객체  
+	conn = DriverManager.getConnection(url, user, password);
+	//out.println("db 연결:"+conn);
+	//4 sql문 작성
+	sb.append("SELECT ID,ENAME,PWD FROM ROOMSIX ");
+	sb.append("where id='jang' ");
+	sb.append("and pwd='123'");
+	//5 문장 객체 
+	pstmt = conn.prepareStatement(sb.toString());
+	//6 실행(select ==> resultset 객체 리턴) 
+	rs = pstmt.executeQuery();
+
+	//7 레코드별로 로직 처리 
+	while (rs.next()) {
+		 ENAME = rs.getString("ENAME");
+		PWD = rs.getString("PWD");
+		 ID = rs.getString("ID");
+		
+	}
+	  if(PWD.equals(pw)  && ID.equals(id)){
+	  %> 
+	  <h1>OK</h1>
+	<%}else{ %> <h1>no ok <%=PWD %><%=pw %><%=ID %><%=id %></h1> <%} %>
+	<% if (rs != null)
+		rs.close();
+	if (pstmt != null)
+		pstmt.close();
+	if (conn != null)
+		conn.close(); %> 
+	
+</body>
+</html>
