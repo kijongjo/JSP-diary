@@ -21,3 +21,7 @@ ex)
 	MemberVO vo = (MemberVO)obj;
 	out.println("<h1> <a href='Logout.jsp'>"+ vo.getName()+"</a>님 환영합니다.</h1>");
 	out.println("<h1>포인트:"+vo.getPoint()+"점"); }%>
+
+*세션의 무효화 
+담겨져 있는 값을 없앤다. 
+session.invalidate(); 
