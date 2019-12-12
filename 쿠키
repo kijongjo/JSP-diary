@@ -15,11 +15,11 @@ respose.addCookie(c);
 client 쪽에서 
 1)javascript로 쿠키 생성
 window.onload=function(){
-document.cookie="쿠키이름=쿠키값";
-document.cookie="product=moniter;expires=만기날짜,시간"
+document.cookie="쿠키이름=쿠키값";                        <-쿠키 1개 생성 
+document.cookie="쿠키이름=쿠키값;expires=만기날짜,시간"    <-쿠키 1개 더 생성
 
-var x = document.cookie;
-var name = getCookie("쿠키이름");
+var x = document.cookie;                                 <-지금껏 만든 쿠키 2가지가 x에 담긴다
+var name = getCookie("쿠키이름");                         <- 특정 쿠키 이름을 가진 것을 name에 넣는다. 
 		console.log("name: " + name);
 
 }
