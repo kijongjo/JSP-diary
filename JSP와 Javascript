@@ -1,0 +1,54 @@
+JSP와 Javascript이 동작 순서 
+
+JSP는 Tomcat server에서 먼저 읽힌다. 
+-Tomcat은 JSP와 servlet을 해석해 작동시키는 WAS이다.-
+
+JSP가 먼저 읽힌 후에 Javascript는 web browser에서 읽히게 된다. 
+이러한 차이는 JSP에 if문이 할당되고 그러한 if문에 따라 javascript의 명령이 결정 될 때 극명하게 나타난다. 
+ex)
+jsp의 if문으로 javascript의 img를 감싸고 if문이면  img1가 출력. else if문이면 img2가 출력 되도록 한다면 
+server 쪽의  개발자 도구에서는 jsp와 javascript의 조합을 통해 img가 결정되는 로직이 보이지만 
+
+
+web browser의 개발자 도구에서는 jsp의 로직은 보이지 않고 단지 img1 -또는 img2-만 출력하라 라는 소스만 보이게 된다. 
+<%@page import="java.util.Random"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+img{
+width:300px;
+height:300px;}
+
+</style>
+<script type="text/javascript">
+window.onload=function(){
+	
+	var m = document.getElementById("movie");
+	/*jsp는 어디에든 들어갈 수 있다. css에도 들어갈 수 있다.   */
+	<%
+	Random rnd = new Random();
+	int value= rnd.nextInt(10);
+	if(value%2==0){
+	%>
+	m.src="../images/movie1.jpg";
+	<%
+	}else{
+	%>
+	m.src="../images/movie2.jpg";
+	<%}
+	%>
+}
+
+</script>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+     <img src="" id="movie" alt="" />
+</body>
+</html>
+
+
