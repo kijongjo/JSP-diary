@@ -42,7 +42,7 @@ function getCookie(cname) {
 
 2)JQuery로 쿠키 생성하기 
 1.jquery 사이트 https://plugins.jquery.com/cookie 에서 파일을 다운받는다. 
-2.압축파일에서 jquery.cookie.js 압축을 풀어 js 폴더에 넣는다.
+2.압축파일에서 jquery.cookie.js 압축을 풀어 web-content에 js폴더를 만든 후 js 폴더에 넣는다.
 3.<script type="text/javascript" src="./js/jquery.cookie.js"></script>를 써준다. 
   주의할점은 jquery cdm을 먼저 써주고 나서 그 다음에 써주어야 한다.
   
