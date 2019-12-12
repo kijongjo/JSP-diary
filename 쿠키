@@ -23,7 +23,59 @@ var name = getCookie("쿠키이름");                         <- 특정 쿠키 �
 		console.log("name: " + name);
 
 }
+function getCookie(cname) {
+			var name = cname + "=";
+			var decodeCookie = decodeURIComponent(document.cookie);
+			var ca = decodeCookie.split(";");
+			for (var i = 0; i < ca.length; i++) {
+				var c = ca[i];
+				while (c.charAt(0) == '') {
+					c = c.substring(1);
 
+				}
+				if (c.indexOf(name) == 0) {
+					return c.substring(name.length, c.length);
+
+				}
+
+
+2)JQuery로 쿠키 생성하기 
+1.jquery 사이트 https://plugins.jquery.com/cookie 에서 파일을 다운받는다. 
+2.압축파일에서 jquery.cookie.js 압축을 풀어 js 폴더에 넣는다.
+3.<script type="text/javascript" src="./js/jquery.cookie.js"></script>를 써준다. 
+  주의할점은 jquery cdm을 먼저 써주고 나서 그 다음에 써주어야 한다.
+  
+$(function() {
+    쿠키 생성: 세션이 종료될때까지 존재 
+    $.cookie("이름","값");  
+    만료되는 쿠키 생성
+    $.cookie("이름","값",{expires:기간});
+    쿠키 읽기 
+    console.log("keyword : "+$.cookie("이름"));
+    모든 쿠키 읽기:객체 형태로 리턴 
+    console.log($.cookie());
+    쿠키 삭제 
+    console.log("keyword 쿠키 삭제:"+$.removeCookie("이름")+$.removeCookie("이름"));
+	
+	
+	})
+
+
+ex)
+$(function() {
+		//쿠키 생성: 세션이 종료될때까지 존재 
+    $.cookie("id","hong");
+	//7일 뒤에 만료되는 쿠키 생성
+	$.cookie("keyword","coffee",{expires:7});
+	//쿠키 읽기 
+	console.log("keyword : "+$.cookie("keyword"));
+	//모든 쿠키 읽기:객체 형태로 리턴 
+	console.log($.cookie());
+	//쿠키 삭제 
+	console.log("keyword 쿠키 삭제:"+$.removeCookie("keyword")+$.removeCookie("id"));
+	
+	
+	})
 
 
 *session과 쿠키의 차이점 
@@ -31,6 +83,11 @@ session은 서버 쪽에서 유지 관리를 하고 쿠키는 사용자의 web b
 서버에 부담이 적은 쿠키를 사용하는 경향이 강하다. 
 
 
-
-
+쿠키 읽기
+Cookie[] list= request.getCookies();
+for(Cookie c : clist){
+	   out.println("<h2>쿠키: "+c.getName()+":"+c.getValue()+"</h2>");
+	   
+	   
+   }
 
