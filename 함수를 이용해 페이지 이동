@@ -55,3 +55,60 @@ var dan;
 	</form>
 </body>
 </html>
+
+
+------------------------------------------------------------------------------------------------------------------------------
+<a>태그를 이용해  다른 페이지로 이동하기 
+<a href="주소">를 통해 다른 페이지로 이동하는 것은 기본이다. 
+
+하지만 이러한 페이지 이동과 request.getParameter("이름")을 이용해 페이지를  이동하거나 div등의 판을 바꾸는 것도 가능하다.
+주소 값에 주소?이름=값 을 직접 주게 되면 주어진 주소 페이지 내에서 클릭시 동적인 변화를 줄 수 있게 된다. 
+
+ex)
+layout.jsp 페이지 내에서 링크 클릭을 통해 leftcontents div의 내용을 바꾸기 
+<a href="layout.jsp?print=shopping">   
+
+layout.jsp 페이지에서 
+
+	<% String href1="";
+	  Object obj = request.getParameter("href1");
+	if(obj !=null){
+	  href1 = (String)obj+".jsp";  
+		  
+	  }else{ href1 ="leftContents.jsp";}
+	
+	
+	
+	%>
+	
+	<jsp:include page="<%=href1%>"></jsp:include>
+
+
+ 기존의 leftcontents div 내용
+  <%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+ <div id="leftContents">
+			<ol>
+				<li>액상형 전자담배</li>
+				<li>사용 중단 권고</li>
+				<li>감사원 압수수색</li>
+				<li>감사자료 확보</li>
+				<li>어촌뉴딜300 사업 선정</li>
+				<li>세월호 특수단</li>
+				<li>KT 차기 회장 후보 9명 압축</li>
+				<li>곰탕집 성추행 유죄</li>
+				<li>중증 폐질환</li>
+				<li>문희상 아들 문석균</li>
+			</ol>
+		</div>
+		
+		
+ 변화 되는 div 내용
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<div id="leftContents">
+쇼핑
+</div>
+	
