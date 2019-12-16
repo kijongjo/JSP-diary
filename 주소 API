@@ -25,7 +25,123 @@ ex)
 	 }).open();
  }
 
+--------------------------------------------------------------------------------------------------------------------------------
+csv라이브러리
 
+servlets.com 사용하기 
+이미지 파일을 전송하기 위해 file type을 써서 보내게 되는데  i/o class의 객체를 사용하게 된다.
+   이렇게 되면 무거울 뿐더러 보낸 이후에 단계가 복잡하다.  이것을 해결하기 위해 csv 라이브러리를 사용하는데 
+    servlets.com에서 제공하는 오픈소스라이브러리를 통해 파일 업로드 및 불러오기를 쉽게 할 수가 있다.
+
+1-이미지를 업로드해서 보내는 페이지
+ 1)
+  servlets.com에서 받은 폴더 ->lib 폴더->cos파일을 web-inf->lib폴더에 넣어준다.
+ 2)
+  form 속성에 enctype="multipart/form-data" 넣어준다.   <-enctype은 servlets.com에서 jar파일을 다운받아서 파일 업로드 불러오기를 쉽게하기 위해서 사용한다.
+  
+  ex)
+  <form action="result.jsp" name="frm" method="post"
+		enctype="multipart/form-data">
+		<table>
+			<tr>
+				<th>제목</th>
+				<td><input type="text" name="title" id="" /></td>
+			</tr>
+			<tr>
+				<th>작성자</th>
+				<td><input type="text" name="writer" id="" /></td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<!-- 행과 열로 여러가지를 쓸 수있는 textarea -->
+				<td><textarea name="contents" id="" cols="30" rows="10"></textarea></td>
+			</tr>
+			<tr>
+				<th>첨부파일</th>
+				<!-- 파일 선택기능이 담긴 태그-->
+				<td><input type="file" name="filename" id="" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="전송" /></td>
+				<td></td>
+			</tr>
+
+		</table>
+	</form>
+
+2-받아온 이미지 파일의 경로를 설정하는 페이지 
+upload된 이미지 파일을 어디에 저장할지 설정하고 이미지파일을 최대 몇 mb까지 보낼지 한계를 지정, 
+한글사용유무와 만약에 같은 이름을 가진 이미지 파일이 넘어오게 되면 어떻게 처리할지 설정하는 역할을 한다.
+
+1)
+먼저 webcontent에 upload 폴더를 만들어준다.(목적:보낸 이미지파일을 저장해두는 저장소 역할)
+ex)upload 폴더의 경로 확인하기 
+String saveDir = request.getRealPath("/upload");
+out.println(saveDir);
+2)
+첨부 파일 최대 크기를 설정한다. 서버가 과도한 용량으로 인해 안터지도록하기 위함이다. 
+int maxFileSize = 1024 * 1024 * 10; // <- (=10MB)
+3)
+multipartrequest(요청객체,저장 디렉토리,최대파일크기, 인코딩타입,동명파일처리규정객체)로 
+instance를 한다. 
+*multipartrequest?
+동명파일처리규정객체는 이름 같은 파일올라가면 어떻게할지에 대한 규칙을 만든다. 
+Multipartrequest(servlets.com의 index에 나와있는 class이다.)
+형식:multipartrequest(요청객체,저장 디렉토리,최대파일크기, 인코딩타입,동명파일처리규정객체)
+ex)
+	MultipartRequest mr = new MultipartRequest(request, saveDir, maxFileSize, "UTF-8",
+				new DefaultFileRenamePolicy());
+
+
+*write에서 이미지 파일을 보내면 upload 폴더에 저장되도록 설정해 놓았는데 왜 eclipse에서 upload 파일을 보면 
+저장된 이미지가 보이지 않고 os에서 주소를 쳐서 따라 들어가야 보일까?
+
+이미지를 서버에 전송하는 것은 이클립스는 관여하지 않은 채로 서버와 브러우저간에만 상호작용을한다.
+이클립스는 단지 코드를 실행하고 경로를 명시해주는 역할만 한다.
+		
+		
+*comment:개발하는 환경과 운영하는 환경은 분명한 차이가 있다는 것을 기억 해야 한다. 
+즉 실제로 실행되는 곳을 기준으로 개발을 해주어야한다.-윈도우 기준으로 c밑에 어디밑에라고 명시하면 큰일난다.-
+		
+		
+*comment:중복되는것을 방지하기위해  사용자의 아이디를 붙이고 사진의 이름을 붙이도록한다. 
+사용자_파일의 원래 이름 
+
+
+3-이미지를 출력하는 곳에서 
+1)
+ upload 디렉토리의 실제 os경로를 얻어온다.     		  
+2)
+ 파일 객체를 생성하고 실제경로를 매개변수에 넣어준다. 
+3)
+ 디렉토리인지 아닌지 물어보는 내장된 method를 사용해 boolean 값을 얻어온다.
+
+4)
+현재 디렉토리에 있는 모든 파일의 목록을 string 타입의 배열에 담는다
+	
+5)
+향상된 for문을 통해 img태그에 주소를 입력한다.
+	
+		
+		
+		
+	ex)	
+/*upload 디렉토리의 실제 os경로를 얻어온다.  */
+    		  String path = request.getRealPath("/upload");
+  //파일 객체를 생성하고 실제경로를 매개변수에 넣어준다.
+  File f= new File(path);
+  //디렉토리인지 아닌지 물어보는 내장된 method를 사용해 boolean 값을 얻어온다.
+if(f.isDirectory()){
+	//현재 디렉토리에 있는 모든 파일의 목록을 string 타입의 배열에 담는다
+	String[] fList=f.list();
+	//향상된 for문을 통해 img태그에 주소를 입력한다.
+	for(String x:fList){
+		out.println("<div><img src='../upload/"+x+"'/><div>");
+		
+		
+	}
+	
+}
 
 
 
