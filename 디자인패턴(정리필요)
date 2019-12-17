@@ -56,3 +56,33 @@ public class MakeConnection {
 	}
 
 }
+
+
+
+test 하는 곳에서
+
+// MakeConnection 객체 생성
+		// MakeConnection이 자원을 많이 먹는 애라고 해보자 new를 하게 되면 로딩이 오래 걸릴정도로 과부하가 걸리게 된다면
+		// 이것에 대한 instance는 1개 이상 만들지 못하도록 막아야 한다. 때문에 instance 하지 않게 하기 위해선 3가지 방법
+		// 존재한다.
+		// 1.추상 class로 만들기
+		// 2.interface로 만들기
+		// 3.생성자에 접근지정자 만들기(MakeConnection 클래스 생성자에 private 접근지정자 걸기)
+		
+		
+	
+		//new 하지 않고 객체를 생성하기 
+		// Makeconnection 객체 생성(첫번째 방법)
+		//MakeConnection mc1 = MakeConnection.mc;  <-이렇게 하면 mc라는 멤버필드에 직접 접근하니 그것도 막아주려면 mc에도 private를 설정해준다.
+		//MakeConnection mc2 = MakeConnection.mc;
+		
+		// Makeconnection 객체 생성(두번째 방법)
+		//getinstance는 초기화하는 method로 new를  한번만 하도록 해준다. 
+		//mc1에서 new MakeConnection을 한번 해준다. 
+		MakeConnection mc1 = MakeConnection.getInstance();
+		//mc1에서 new MakeConnection을 해줬기 때문에 여기서는 기존에 만들어진 Makeconnection을 그냥 mc2에 넣어준다.
+		MakeConnection mc2 = MakeConnection.getInstance();
+		//결론적으로 new는 한번만 한것이다.
+		
+		System.out.println("mc1 : "+ mc1);
+		System.out.println("mc2 : "+ mc2);
