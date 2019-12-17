@@ -1,0 +1,97 @@
+*개념: 디자인 패턴 (GoF?디자인 패턴에 몇가지 정리해놓은 규칙과 방법들이 있으니 찾아보자.)
+싱글톤 패턴(SingleTon Pattern)
+애플리케이션이 시작될 때 어떤 클래스가 최초 한번만 메모리를 할당하고(Static) 그 메모리에 인스턴스를 만들어 사용하는 디자인패턴.
+
+
+
+싱글톤 패턴의 특징 
+1.private 생성자 
+2.private static한 자기 자신의 멤버변수 
+3.자기자신의 객체를 리턴하는 static getInstance()를 가지게 된다. -getInstance이름은 바뀔 수 있지만 통상 이렇게 쓴다.-
+*SPRING에 사용되는 모든 객체는 싱글톤이다. 유념하자!
+
+자세한 설명은 코드와 함께 진행.
+
+public class MakeConnection {
+
+static을 해주는 이유?
+ 해당 class를 사용하는 곳에서 new를하지 않고 해당 class의 객체를 만들어 사용하기 위함이다.
+	                                                       -개념: 까먹은 개념 static -> 객체의 생성없이 호출이 가능하도록 설정-
+     클레스의 객체를 member field로 설정할 수도 있다.							       
+	private static MakeConnection mc;
+	
+상수로 고정해 바꾸지 못하도록 막아 놓는다. 사용자가 db접속과 관련해서 어떠한 접근도 하지 못하도록 예방하는 것도 있다.
+	final static String DRIVER = "oracle.jdbc.driver.OracleDriver";
+	final static String URL = "jdbc:oracle:thin:@192.168.0.35:1521:orcl";
+	final static String USER = "scott";
+	final static String PASSWORD = "tiger";
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	StringBuffer sb = new StringBuffer();
+
+	private MakeConnection() {
+
+	}
+
+new를 새로 하지 않고 쓰도록 하기위한 method 설정이다. 즉 한번만 new를 해주면 그것을 가지고 다른곳에서도 계속 쓸수가 있다.
+그래서 해당 class를 사용하는 곳마다 참조값을 출력해보면 동일한 참조값을 가진다.
+
+	public static MakeConnection getInstance() {
+
+처음에 부르면 null이기 때문에 new를 하고 두번째 부르면 기본 값을 그냥 불러오도록 한다.
+		if (mc == null) {
+			mc = new MakeConnection();
+		 
+		}
+		return mc;
+	}
+
+	public Connection getConnection() {
+만약 conn이 null값이면 driver 로딩과 db접속을 실행하게 된다.  그렇지 않다면 이미 접속되어 객체정보를 받은 conn을 return한다.
+		if (conn == null) {
+			try {
+				Class.forName(DRIVER);
+				conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("conn:" + conn);
+
+		}
+
+		return conn;
+	}
+
+}
+
+
+
+class를 사용 하는 곳에서
+
+MakeConnection 객체 생성
+상황:
+만약 MakeConnection이 자원을 많이 먹는 class라고 해보자  new를 한번 하는 것만으로  로딩이 오래 걸릴정도로 메모리에 부담이 걸리게 된다면
+해당class에 대한 instance는 1개 이상 만들지 못하도록 막아야 한다. 때문에 instance 하지 않게 하기 위해선 3가지 방법이 존재한다.
+1.추상 class로 만들기
+2.interface로 만들기
+3.생성자에 접근지정자 만들기(MakeConnection 클래스 생성자에 private 접근지정자 걸기)
+		
+new 하지 않고 객체를 생성하기 
+-Makeconnection 객체 생성(첫번째 방법)
+
+MakeConnection mc1 = MakeConnection.mc;  <-이렇게 하면 사용자가 mc라는 멤버필드에 직접 접근하게된다. 그것도 막아주려면 mc에도 private를 설정해준다.
+MakeConnection mc2 = MakeConnection.mc;
+		
+-Makeconnection 객체 생성(두번째 방법)
+MakeConnection mc1 = MakeConnection.getInstance();   <-getInstance()는 초기화된 mc 객체를 return한다.
+mc1에서 new MakeConnection을 해줬기 때문에 여기서는 기존에 만들어진 Makeconnection을 그냥 mc2에 넣어준다.
+MakeConnection mc2 = MakeConnection.getInstance();   <-mc1과 동일한 mc객체를 return받는다.
+
+결론적으로 new는 한번만한 꼴이 된다.
+		
+		
