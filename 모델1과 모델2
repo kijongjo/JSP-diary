@@ -7,6 +7,7 @@ JSP로 구성할 수 있는 웹 어플리케이션의 아키텍쳐이다.
 모델 2는 결과의 출력만 담당
 
 모델1이란? 
+![2404023C592FF76D03](https://user-images.githubusercontent.com/54735867/72484508-c9eff080-3847-11ea-9f58-32ce2dc67f50.jpg)
 
 
 *Model,View,Controller란? 
